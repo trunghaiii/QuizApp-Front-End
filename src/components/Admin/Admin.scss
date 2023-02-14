@@ -1,0 +1,23 @@
+.admin-container {
+    height: 100vh;
+    display: flex;
+
+    .side-bar {
+        height: 100%;
+    }
+
+    .admin-content {
+        width: 100%;
+
+        .collapse-bar {
+            border: 1px solid red;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .main-content {
+            border: 1px solid seagreen;
+            height: 100%;
+        }
+    }
+}
