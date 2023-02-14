@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ModalCreateUser from "./ModalCreateUser/ModalCreateUser";
 import "./UserManagement.scss"
+import UserTable from "./UserTable/UserTable";
 
 const UserManagement = () => {
 
@@ -15,8 +16,11 @@ const UserManagement = () => {
                 <h3>User Management</h3>
             </div>
             <div className="user-manage-content">
-                <div className="user-manage-add">
+                <div className="user-manage-add mb-3">
                     <button className="btn btn-success" onClick={() => handleAddNew()}>Add New User</button>
+                </div>
+                <div className="user-manage-table">
+                    <UserTable />
                 </div>
                 <ModalCreateUser show={show} setShow={setShow} />
             </div>
