@@ -1,14 +1,36 @@
-import { useState } from "react";
+
 import ModalCreateUser from "./ModalCreateUser/ModalCreateUser";
 import "./UserManagement.scss"
 import UserTable from "./UserTable/UserTable";
+import { useEffect, useState } from "react";
+import { getAllUsers } from "../../../services/apiService"
+import ModalUpdateUser from "./ModalUpdateUser/ModalUpdateUser";
 
 const UserManagement = () => {
 
-    const [show, setShow] = useState(false)
+    const [showModalCreate, setShowModalCreate] = useState(false)
+    const [showModalUpdate, setShowModalUpdate] = useState(false)
+    const [dataUpdate, setDataUpdate] = useState({})
+    const [listUser, setListUser] = useState([])
 
     const handleAddNew = () => {
-        setShow(true);
+        setShowModalCreate(true);
+    }
+
+    useEffect(() => {
+        fetchListUser()
+    }, [])
+
+    const fetchListUser = async () => {
+        let res = await getAllUsers();
+        if (res.EC === 0) {
+            setListUser(res.DT)
+        }
+    }
+
+    const handleClickBtnUpdate = (user) => {
+        setShowModalUpdate(true);
+        setDataUpdate(user)
     }
     return (
         <div className="user-manage-container">
@@ -20,9 +42,21 @@ const UserManagement = () => {
                     <button className="btn btn-success" onClick={() => handleAddNew()}>Add New User</button>
                 </div>
                 <div className="user-manage-table">
-                    <UserTable />
+                    <UserTable
+                        listUser={listUser}
+                        handleClickBtnUpdate={handleClickBtnUpdate}
+                    />
                 </div>
-                <ModalCreateUser show={show} setShow={setShow} />
+                <ModalCreateUser
+                    show={showModalCreate}
+                    setShow={setShowModalCreate}
+                    fetchListUser={fetchListUser}
+                />
+                <ModalUpdateUser
+                    show={showModalUpdate}
+                    setShow={setShowModalUpdate}
+                    dataUpdate={dataUpdate}
+                />
             </div>
         </div>
     )

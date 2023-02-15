@@ -1,27 +1,15 @@
-import { useEffect, useState } from "react";
-import { getAllUsers } from "../../../../services/apiService"
+
 
 const UserTable = (props) => {
 
-    const [listUser, setListUser] = useState([])
-
-    useEffect(() => {
-        fetchListUser()
-    })
-
-    const fetchListUser = async () => {
-        let res = await getAllUsers();
-        if (res.EC === 0) {
-            setListUser(res.DT)
-        }
-    }
+    const { listUser } = props
 
     return (
         <div>
             <table className="table table-hover table-bordered">
                 <thead>
                     <tr>
-                        <th scope="col">No</th>
+                        <th scope="col">ID</th>
                         <th scope="col">Username</th>
                         <th scope="col">Email</th>
                         <th scope="col">Role</th>
@@ -33,13 +21,16 @@ const UserTable = (props) => {
                         listUser.map((user, index) => {
                             return (
                                 <tr key={`table-user-${index}`}>
-                                    <th scope="row">{index + 1}</th>
+                                    <th scope="row">{user.id}</th>
                                     <td>{user.username}</td>
                                     <td>{user.email}</td>
                                     <td>{user.role}</td>
                                     <td>
                                         <button className="btn btn-secondary">View</button>
-                                        <button className="btn btn-warning mx-3">Update</button>
+                                        <button
+                                            className="btn btn-warning mx-3"
+                                            onClick={() => props.handleClickBtnUpdate(user)}
+                                        >Update</button>
                                         <button className="btn btn-danger">Delete</button>
                                     </td>
                                 </tr>
