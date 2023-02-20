@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import { postCreateNewUser } from "../../../../services/apiService"
+import { putUpdateUser } from "../../../../services/apiService"
 import { toast } from 'react-toastify';
 import _ from "lodash"
 
@@ -27,6 +27,7 @@ const ModalUpdateUser = (props) => {
         setRole("USER")
         setImage("")
         setPreview("")
+        props.setDataUpdate({})
     };
     // const handleShow = () => setShow(true);
 
@@ -41,32 +42,11 @@ const ModalUpdateUser = (props) => {
 
     }
 
-    const validateEmail = (email) => {
-        return String(email)
-            .toLowerCase()
-            .match(
-                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-            );
-    };
 
-    const handleCreateNewUser = async () => {
-
-        // Validate
-
-        let isEmailValidated = validateEmail(email);
-        if (!isEmailValidated) {
-            toast.error("Invalid Email !!!")
-            return;
-        }
-
-        if (!password) {
-            toast.error("Invalid PassWord !!!")
-            return;
-        }
-
+    const handleUpdateUser = async () => {
         // call API
 
-        let data = await postCreateNewUser(email, password, username, role, image)
+        let data = await putUpdateUser(dataUpdate.id, username, role, image)
         console.log(data);
 
         if (data && data.EC === 0) {
@@ -172,7 +152,7 @@ const ModalUpdateUser = (props) => {
                     </Button>
                     <Button
                         variant="primary"
-                        onClick={() => handleCreateNewUser()}>
+                        onClick={() => handleUpdateUser()}>
                         Update
                     </Button>
                 </Modal.Footer>
