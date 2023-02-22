@@ -11,7 +11,7 @@ const ModalDeleteUser = (props) => {
 
     const handleDeleteUser = async () => {
         let data = await deleteUser(dataDelete.id)
-        // console.log(data);
+        // console.log(typeof dataDelete.id);
 
         if (data && data.EC === 0) {
             toast.success(data.EM)

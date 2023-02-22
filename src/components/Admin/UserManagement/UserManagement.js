@@ -3,12 +3,15 @@ import ModalCreateUser from "./ModalCreateUser/ModalCreateUser";
 import "./UserManagement.scss"
 import UserTable from "./UserTable/UserTable";
 import { useEffect, useState } from "react";
-import { getAllUsers } from "../../../services/apiService"
+import { getAllUsers, getAllUsersPaginate } from "../../../services/apiService"
 import ModalUpdateUser from "./ModalUpdateUser/ModalUpdateUser";
 import ModalViewUser from "./ModalViewUser/ModalViewUser";
 import ModalDeleteUser from "./ModalDeleteUser/ModalDeleteUser";
+import UserTablePaginate from "./UserTablePaginate/UserTablePaginate";
 
 const UserManagement = () => {
+
+    const LIMIT_USER_PER_PAGE = 5;
 
     const [showModalCreate, setShowModalCreate] = useState(false)
     const [showModalUpdate, setShowModalUpdate] = useState(false)
@@ -18,19 +21,29 @@ const UserManagement = () => {
     const [dataUpdate, setDataUpdate] = useState({})
     const [dataDelete, setDataDelete] = useState({})
     const [listUser, setListUser] = useState([])
+    const [pageCount, setPageCount] = useState(0)
 
     const handleAddNew = () => {
         setShowModalCreate(true);
     }
 
     useEffect(() => {
-        fetchListUser()
+        fetchListUserPaginate(1)
     }, [])
 
     const fetchListUser = async () => {
         let res = await getAllUsers();
         if (res.EC === 0) {
             setListUser(res.DT)
+        }
+    }
+
+    const fetchListUserPaginate = async (page) => {
+        let res = await getAllUsersPaginate(page, LIMIT_USER_PER_PAGE);
+        if (res.EC === 0) {
+            //console.log(res.DT.users);
+            setListUser(res.DT.users);
+            setPageCount(res.DT.totalPages)
         }
     }
 
@@ -48,6 +61,7 @@ const UserManagement = () => {
         setShowModalDelete(true);
         setDataDelete(user)
     }
+
     return (
         <div className="user-manage-container">
             <div className="user-manage-title">
@@ -58,11 +72,20 @@ const UserManagement = () => {
                     <button className="btn btn-success" onClick={() => handleAddNew()}>Add New User</button>
                 </div>
                 <div className="user-manage-table">
-                    <UserTable
+                    {/* <UserTable
                         listUser={listUser}
                         handleClickBtnUpdate={handleClickBtnUpdate}
                         handleClickBtnView={handleClickBtnView}
                         handleClickBtnDelete={handleClickBtnDelete}
+                    /> */}
+
+                    <UserTablePaginate
+                        listUser={listUser}
+                        handleClickBtnUpdate={handleClickBtnUpdate}
+                        handleClickBtnView={handleClickBtnView}
+                        handleClickBtnDelete={handleClickBtnDelete}
+                        pageCount={pageCount}
+                        fetchListUserPaginate={fetchListUserPaginate}
                     />
                 </div>
                 <ModalCreateUser
