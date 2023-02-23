@@ -12,6 +12,8 @@ import Admin from './components/Admin/Admin';
 import DashBoard from './components/Admin/DashBoard/DashBoard'
 import UserManagement from './components/Admin/UserManagement/UserManagement'
 
+import Login from "./components/Auth/Login/Login"
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
   createBrowserRouter,
@@ -48,6 +50,10 @@ const router = createBrowserRouter([
       }
     ],
   },
+  {
+    path: "/login",
+    element: <Login />
+  }
 ]);
 
 
