@@ -3,6 +3,19 @@
         height: 45px;
         // border: 1px solid red;
         text-align: right;
+        margin: 15px 100px;
+
+        button {
+            margin-left: 20px;
+            padding: 5px 20px;
+            border-radius: 10px;
+            background-color: rgb(226, 230, 234);
+            border: 1px solid black;
+
+            &:hover {
+                background-color: white;
+            }
+        }
     }
 
     .title {
@@ -34,6 +47,12 @@
             color: white;
             background-color: black;
             margin-top: 7px;
+        }
+    }
+
+    .back-home {
+        span {
+            cursor: pointer;
         }
     }
 }
