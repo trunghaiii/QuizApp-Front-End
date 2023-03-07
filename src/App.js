@@ -13,6 +13,7 @@ import DashBoard from './components/Admin/DashBoard/DashBoard'
 import UserManagement from './components/Admin/UserManagement/UserManagement'
 
 import Login from "./components/Auth/Login/Login"
+import Register from './components/Auth/Register/Register';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
@@ -53,6 +54,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />
+  },
+  {
+    path: "/register",
+    element: <Register />
   }
 ]);
 

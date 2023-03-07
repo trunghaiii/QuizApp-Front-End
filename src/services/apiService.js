@@ -34,7 +34,7 @@ const getAllUsersPaginate = (page, limit) => {
 }
 
 const postLogin = (email, password) => {
-    return axios.post(`api/v1/login`, { email, password });
+    return axios.post(`api/v1/auth/login`, { email, password });
 }
 
 export {

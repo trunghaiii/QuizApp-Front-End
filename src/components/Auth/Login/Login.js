@@ -31,7 +31,7 @@ const Login = (props) => {
         <div className="login-container">
             <div className="header">
                 Don't have an account yet?
-                <button>Sign Up</button>
+                <button onClick={() => navigate("/register")}>Sign Up</button>
             </div>
             <div className="title col-3 mx-auto">
                 Quiz App

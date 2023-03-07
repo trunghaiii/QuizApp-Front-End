@@ -22,7 +22,7 @@ const Header = () => {
                         </Nav>
                         <Nav>
                             <Button className='btn-login' onClick={() => navigate("/login")}>Login</Button>
-                            <Button className='btn-signup' to="#">Sign Up</Button>
+                            <Button className='btn-signup' onClick={() => navigate("/register")}>Sign Up</Button>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
