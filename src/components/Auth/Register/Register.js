@@ -2,6 +2,8 @@ import "./Register.scss"
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
+import { toast } from 'react-toastify';
+import { postRegisterUser } from "../../../services/apiService"
 
 
 const Register = () => {
@@ -13,6 +15,40 @@ const Register = () => {
     const [isShowPassword, setIsShowPassword] = useState(false)
 
     const navigate = useNavigate();
+
+    const validateEmail = (email) => {
+        return String(email)
+            .toLowerCase()
+            .match(
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            );
+    };
+
+    const handleRegister = async () => {
+        // validate data
+        const isValidEmail = validateEmail(email);
+        if (!isValidEmail) {
+            toast.error('Invalid email')
+            return;
+        }
+
+        if (!password) {
+            toast.error('Invalid password')
+            return;
+        }
+
+        // call API
+
+        let data = await postRegisterUser(email, password, username);
+        if (data && data.EC === 0) {
+            toast.success(data.EM);
+            navigate('/login')
+        }
+
+        if (data && Number(data.EC) !== 0) {
+            toast.error(data.EM);
+        }
+    }
 
     return (
         <div className="register-container">
@@ -63,7 +99,7 @@ const Register = () => {
                     </div>
                 </div>
                 <div className="btn-register">
-                    <button>Create My Account</button>
+                    <button onClick={() => handleRegister()}>Create My Account</button>
                 </div>
                 <div className="back-home">
                     <span onClick={() => navigate("/")}>Back To Home Page</span>
