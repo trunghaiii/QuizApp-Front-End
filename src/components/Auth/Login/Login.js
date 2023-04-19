@@ -3,12 +3,15 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { postLogin } from "../../../services/apiService"
 import { toast } from 'react-toastify';
+import { useSelector, useDispatch } from 'react-redux'
+import { fetch_user_login_success } from '../../../redux/slices/userSlice'
 
 
 const Login = (props) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleLogin = async () => {
         // validate
@@ -16,9 +19,11 @@ const Login = (props) => {
 
         // submit apis
         let data = await postLogin(email, password)
-        console.log(data);
+        //console.log(data);
 
         if (data && data.EC === 0) {
+            //console.log(data);
+            dispatch(fetch_user_login_success(data))
             toast.success(data.EM)
             navigate("/")
         }
