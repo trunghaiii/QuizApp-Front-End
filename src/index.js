@@ -4,15 +4,22 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'nprogress/nprogress.css'
 
-import { store } from './redux/store'
+import store from './redux/store'
+import { PersistGate } from "redux-persist/integration/react";
+import { persistStore } from "redux-persist";
+
 import { Provider } from 'react-redux'
+
+let persistor = persistStore(store);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    <PersistGate persistor={persistor}>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </PersistGate>
   </Provider>
 );
 
