@@ -5,31 +5,33 @@ import { postLogin } from "../../../services/apiService"
 import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux'
 import { fetch_user_login_success } from '../../../redux/slices/userSlice'
-
+import { ImSpinner9 } from "react-icons/im";
 
 const Login = (props) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [isLoading, setisLoading] = useState(false)
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const handleLogin = async () => {
         // validate
 
-
+        setisLoading(true)
         // submit apis
         let data = await postLogin(email, password)
         //console.log(data);
-
         if (data && data.EC === 0) {
             //console.log(data);
             dispatch(fetch_user_login_success(data))
             toast.success(data.EM)
+            setisLoading(false)
             navigate("/")
         }
 
         if (data && data.EC !== 0) {
             toast.error(data.EM)
+            setisLoading(false)
         }
     }
     return (
@@ -69,7 +71,11 @@ const Login = (props) => {
             <div className="login-btn col-3 mx-auto">
                 <button
                     onClick={() => handleLogin()}
-                >Login to QuizApp</button>
+                    disabled={isLoading}
+                >
+                    {isLoading === true && <ImSpinner9 className="spinning" />}
+
+                    Login to QuizApp</button>
             </div>
             <div className="back-home text-center mt-3">
                 <span
