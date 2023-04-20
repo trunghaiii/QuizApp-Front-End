@@ -27,7 +27,7 @@ export const userSlice = createSlice({
             state.account.role = action?.payload?.DT?.role
             state.isAuthenticated = true
 
-            console.log('okla', action.payload);
+            //console.log('okla', action.payload);
         },
         // decrement: (state) => {
         //     state.value -= 1

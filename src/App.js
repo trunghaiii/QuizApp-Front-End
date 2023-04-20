@@ -15,6 +15,8 @@ import UserManagement from './components/Admin/UserManagement/UserManagement'
 import Login from "./components/Auth/Login/Login"
 import Register from './components/Auth/Register/Register';
 
+import QuizList from './components/HomePage/User/QuizList/QuizList';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
   createBrowserRouter,
@@ -29,7 +31,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/user",
-        element: <User />,
+        element: <QuizList />,
       },
       {
         path: "/",
