@@ -5,7 +5,7 @@ import store from "../redux/store"
 
 
 const instance = axios.create({
-    baseURL: 'http://localhost:8081/'
+    baseURL: 'http://localhost:8080/'
 });
 
 // Add a request interceptor

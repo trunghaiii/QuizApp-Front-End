@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { getQuizByParticipant } from '../../../../services/apiService'
 import "./QuizList.scss"
+import { useNavigate } from "react-router-dom";
 
 const QuizList = (props) => {
     const [quizList, setQuizList] = useState([])
-
+    const navigate = useNavigate();
     useEffect(() => {
         getQuizData()
     }, [])
@@ -13,7 +14,7 @@ const QuizList = (props) => {
         let data = await getQuizByParticipant();
 
         if (data && data.EC === 0) {
-            console.log(data.DT);
+            //console.log(data.DT);
             setQuizList(data.DT);
         }
     }
@@ -27,7 +28,7 @@ const QuizList = (props) => {
                             <div className="card-body">
                                 <h5 className="card-title">Quiz {index + 1}</h5>
                                 <p className="card-text">{quiz.description}</p>
-                                <a href="#" className="btn btn-primary">Start Now</a>
+                                <button className='btn btn-primary' onClick={() => navigate(`/user/${quiz.id}`)}>Start Now</button>
                             </div>
                         </div>
                     )

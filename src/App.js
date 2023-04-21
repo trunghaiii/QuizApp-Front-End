@@ -16,6 +16,7 @@ import Login from "./components/Auth/Login/Login"
 import Register from './components/Auth/Register/Register';
 
 import QuizList from './components/HomePage/User/QuizList/QuizList';
+import DetailQuiz from './components/HomePage/User/DetailQuiz/DetailQuiz';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
@@ -23,6 +24,13 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
+const NotFound = () => {
+  return (
+    <div className='alert alert-danger container mt-3'>
+      Can not find the route
+    </div>
+  )
+}
 
 const router = createBrowserRouter([
   {
@@ -60,6 +68,14 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />
+  },
+  {
+    path: "/user/:id",
+    element: <DetailQuiz />,
+  },
+  {
+    path: "*",
+    element: <NotFound />,
   }
 ]);
 
