@@ -72,7 +72,7 @@ const DetailQuiz = (props) => {
         // console.log(questionDataClone);
         // console.log(questionData);
 
-        console.log(questionData);
+        //console.log(questionData);
     }
 
 
@@ -83,6 +83,44 @@ const DetailQuiz = (props) => {
 
     const handleNext = () => {
         if (index < questionData.length - 1) setIndex(index + 1)
+    }
+    // {
+    //     "quizId": 1,
+    //     "answers": [
+    //         { 
+    //             "questionId": 1,
+    //             "userAnswerId": [3]
+    //         },
+    //         { 
+    //             "questionId": 2,
+    //             "userAnswerId": [6]
+    //         }
+    //     ]
+    // }
+
+    const handleFinish = () => {
+        let payload = {
+            quizId: +quizId,
+            answers: []
+        }
+
+        if (questionData && questionData.length > 0) {
+            questionData.forEach((question) => {
+                let questionId = +question.questionId
+                let userAnswerIdArr = [];
+                if (question.answers && question.answers.length > 0) {
+                    question.answers.forEach((answer) => {
+                        if (answer.isSelected === true) {
+                            userAnswerIdArr.push(answer.id);
+                        }
+                    })
+                }
+
+                payload.answers.push({ questionId: questionId, userAnswerId: userAnswerIdArr })
+            })
+        }
+        console.log("final patload", payload);
+        //console.log(payload);
     }
 
     //console.log(questionData, index);
@@ -112,7 +150,7 @@ const DetailQuiz = (props) => {
                     >Next</button>
                     <button
                         className='btn btn-warning'
-                        onClick={() => handleNext()}
+                        onClick={() => handleFinish()}
                     >Finish</button>
                 </div>
             </div>
