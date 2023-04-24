@@ -6,6 +6,11 @@ const Question = (props) => {
         return (<></>)
     }
 
+    const handleCheckBox = (event, questionId, answerId) => {
+        console.log(event.target.checked, `q-${questionId} a-${answerId}`);
+        props.handleCheckBoxData(questionId, answerId)
+    }
+    //console.log(questionData);
     return (
         <>
             {questionData.image ?
@@ -24,7 +29,13 @@ const Question = (props) => {
                         return (
                             <>
                                 <div key={`an-${indexx}`} className="form-check">
-                                    <input className="form-check-input" type="checkbox" value="" />
+                                    <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        value=""
+                                        checked={ans.isSelected}
+                                        onChange={(event) => handleCheckBox(event, questionData.questionId, ans.id)}
+                                    />
                                     <label className="form-check-label">
                                         {ans.description}
                                     </label>

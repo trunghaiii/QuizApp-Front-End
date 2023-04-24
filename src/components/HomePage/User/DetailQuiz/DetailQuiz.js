@@ -39,7 +39,7 @@ const DetailQuiz = (props) => {
                         }
                         let quizanswer_description = item.quizanswer_description
                         let quizanswer_id = item.quizanswer_id
-                        answers.push({ id: quizanswer_id, description: quizanswer_description })
+                        answers.push({ id: quizanswer_id, description: quizanswer_description, isSelected: false })
                     })
                     //console.log(value);
                     return { questionId: key, answers, questionDescription, image }
@@ -50,6 +50,33 @@ const DetailQuiz = (props) => {
         }
     }
 
+    const handleCheckBoxData = (questionId, answerId) => {
+        const questionDataClone = _.cloneDeep(questionData);
+        const question = questionDataClone.find(item => Number(item.questionId) === Number(questionId))
+        if (question && question.answers) {
+            const b = question.answers.map(item => {
+                if (+item.id === +answerId) {
+                    item.isSelected = !item.isSelected
+                }
+                return item
+            })
+            question.answers = b;
+        }
+        // console.log(question);
+
+        let index = questionDataClone.findIndex(item => Number(item.questionId) === Number(questionId));
+        if (index > -1) {
+            questionDataClone[index] = question;
+            setQuestionData(questionDataClone)
+        }
+        // console.log(questionDataClone);
+        // console.log(questionData);
+
+        console.log(questionData);
+    }
+
+
+
     const handlePrev = () => {
         if (index > 0) setIndex(index - 1)
     }
@@ -58,7 +85,7 @@ const DetailQuiz = (props) => {
         if (index < questionData.length - 1) setIndex(index + 1)
     }
 
-    console.log(questionData, index);
+    //console.log(questionData, index);
     return (
         <div className='detail-quiz-container'>
             <div className='left-content'>
@@ -69,7 +96,9 @@ const DetailQuiz = (props) => {
                 <div className='q-body'>
                     <Question
                         index={index}
-                        questionData={questionData && questionData.length > 0 ? questionData[index] : []} />
+                        questionData={questionData && questionData.length > 0 ? questionData[index] : []}
+                        handleCheckBoxData={handleCheckBoxData}
+                    />
 
                 </div>
                 <div className='q-footer'>
