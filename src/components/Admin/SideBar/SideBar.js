@@ -1,6 +1,6 @@
 
 import 'react-pro-sidebar/dist/css/styles.css';
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 import {
     ProSidebar,
@@ -16,6 +16,7 @@ import { DiReact } from 'react-icons/di'
 import sidebarBg from '../../../assets/bg2.jpg';
 
 const SideBar = ({ collapsed, toggled, handleToggleSidebar }) => {
+    const navigate = useNavigate()
 
     return (
         <ProSidebar
@@ -38,7 +39,8 @@ const SideBar = ({ collapsed, toggled, handleToggleSidebar }) => {
                         whiteSpace: 'nowrap',
                     }}
                 >
-                    {<DiReact size={'3rem'} color={"#3495F1"} />}Quiz
+                    {<DiReact size={'3rem'} color={"#3495F1"} />}
+                    <span onClick={() => navigate("/")}>Quiz</span>
 
                 </div>
             </SidebarHeader>
@@ -59,7 +61,7 @@ const SideBar = ({ collapsed, toggled, handleToggleSidebar }) => {
                         icon={<FaGem />}
                     >
                         <MenuItem><Link to="/admin/user">User Management</Link></MenuItem>
-                        <MenuItem> Quizs Management</MenuItem>
+                        <MenuItem><Link to="/admin/manage-quiz"> Quizs Management</Link></MenuItem>
                         <MenuItem> Questions Management</MenuItem>
                     </SubMenu>
 
