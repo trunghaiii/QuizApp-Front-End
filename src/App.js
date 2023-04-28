@@ -21,6 +21,8 @@ import DetailQuiz from './components/HomePage/User/DetailQuiz/DetailQuiz';
 import QuizManagement from './components/Admin/QuizManagement/QuizManagement';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-perfect-scrollbar/dist/css/styles.css';
+
 import {
   createBrowserRouter,
   RouterProvider,
