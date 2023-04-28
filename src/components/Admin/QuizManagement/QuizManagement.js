@@ -2,6 +2,8 @@
 import Select from 'react-select';
 import "./QuizManagement.scss"
 import { useState } from 'react';
+import { postAddingNewQuiz } from "../../../services/apiService"
+import { toast } from "react-toastify"
 
 const options = [
     { value: 'EASY', label: 'EASY' },
@@ -14,10 +16,31 @@ const QuizManagement = (props) => {
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
     const [type, setType] = useState("EASY")
-    const [image, setImage] = useState("")
+    const [image, setImage] = useState(null)
 
-    const handleUploadImage = () => {
+    const handleUploadImage = (event) => {
+        if (event.target.files[0]) {
+            setImage(event.target.files[0]);
+            //console.log(event.target.files[0]);
+        } else {
+            setImage(null);
+        }
+    }
 
+    const handleAddingQuiz = async () => {
+        let data = await postAddingNewQuiz(name, description, type?.value, image)
+        if (data && data.EC === 0) {
+            toast.success(data.EM)
+            setName("")
+            setDescription("")
+            //setType("")
+            setImage(null)
+        } else {
+            toast.error(data.EM)
+        }
+
+        //console.log(data);
+        //alert("okla")
     }
     return (
         <div className="quiz-manage-container">
@@ -46,8 +69,8 @@ const QuizManagement = (props) => {
             </div>
             <div className='mb-2'>
                 <Select
-                    value={type}
-                    // onChange={this.handleChange}
+                    defaultValue={type}
+                    onChange={setType}
                     placeholder={"Quiz Difficulty..."}
                     options={options}
                 />
@@ -59,6 +82,12 @@ const QuizManagement = (props) => {
                     type="file"
                     onChange={(event) => handleUploadImage(event)}
                 />
+            </div>
+            <div>
+                <button
+                    className='btn btn-warning mt-4'
+                    onClick={() => handleAddingQuiz()}
+                >Save</button>
             </div>
 
         </div>
