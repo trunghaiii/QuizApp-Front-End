@@ -2,12 +2,16 @@
 import { useEffect, useState } from "react"
 import { getAllQuiz } from "../../../services/apiService"
 import ModalUpdateQuiz from "./ModalUpdateQuiz/ModalUpdateQuiz";
+import ModalDeleteQuiz from "./ModalDeleteQuiz/ModalDeleteQuiz";
 
 const QuizTable = (props) => {
 
     const [quizList, setQuizList] = useState([]);
     const [dataUpdate, setDataUpdate] = useState({})
     const [showModalUpdateQuiz, setShowModalUpdateQuiz] = useState(false)
+    const [showModalDeleteQuiz, setShowModalDeleteQuiz] = useState(false)
+    const [quizId, setQuizId] = useState()
+
 
     useEffect(() => {
         fetchAllQuiz()
@@ -24,6 +28,15 @@ const QuizTable = (props) => {
     const handleEditClick = (data) => {
         setDataUpdate(data)
         setShowModalUpdateQuiz(true)
+    }
+
+    const handleDeleteClick = (data) => {
+        setShowModalDeleteQuiz(true)
+        if (data) {
+            setQuizId(data.id)
+        }
+        //console.log(typeof (data.id));
+        //alert("messi")
     }
     return (
         <>
@@ -51,7 +64,10 @@ const QuizTable = (props) => {
                                             className="btn-edit btn btn-warning ml-3"
                                             onClick={() => handleEditClick(item)}
                                         >Edit</button>
-                                        <button className="btn btn-danger">Delete</button>
+                                        <button
+                                            className="btn btn-danger"
+                                            onClick={() => handleDeleteClick(item)}
+                                        >Delete</button>
                                     </td>
 
                                 </tr>
@@ -68,6 +84,12 @@ const QuizTable = (props) => {
                 setShow={setShowModalUpdateQuiz}
                 dataUpdate={dataUpdate}
                 setDataUpdate={setDataUpdate}
+                fetchAllQuiz={fetchAllQuiz}
+            />
+            <ModalDeleteQuiz
+                show={showModalDeleteQuiz}
+                setShow={setShowModalDeleteQuiz}
+                quizId={quizId}
                 fetchAllQuiz={fetchAllQuiz}
             />
         </>
