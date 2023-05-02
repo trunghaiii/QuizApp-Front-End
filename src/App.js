@@ -19,6 +19,7 @@ import QuizList from './components/HomePage/User/QuizList/QuizList';
 import DetailQuiz from './components/HomePage/User/DetailQuiz/DetailQuiz';
 
 import QuizManagement from './components/Admin/QuizManagement/QuizManagement';
+import Questions from './components/Admin/QuestionManagement/Questions';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-perfect-scrollbar/dist/css/styles.css';
@@ -66,6 +67,10 @@ const router = createBrowserRouter([
       {
         path: "/admin/manage-quiz",
         element: <QuizManagement />,
+      },
+      {
+        path: "/admin/manage-question",
+        element: <Questions />,
       }
     ],
   },

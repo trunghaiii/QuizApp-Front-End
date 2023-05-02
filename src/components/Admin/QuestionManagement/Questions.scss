@@ -1,0 +1,54 @@
+.manage-question-container {
+    padding: 10px;
+
+    .question {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+
+        .q-img-upload {
+
+            .img-upload-label {
+                border: 1px solid red;
+                padding: 2px;
+                border-radius: 5px;
+                margin-right: 10px;
+                cursor: pointer;
+            }
+        }
+
+        .add-q {
+            font-size: 25px;
+            color: green;
+            cursor: pointer;
+
+        }
+
+        .remove-q {
+            font-size: 25px;
+            color: red;
+            cursor: pointer;
+        }
+    }
+
+    .answer {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding-left: 20px;
+
+        .add-a {
+            font-size: 25px;
+            color: green;
+            cursor: pointer;
+
+        }
+
+        .remove-a {
+            font-size: 25px;
+            color: red;
+            cursor: pointer;
+        }
+    }
+}
