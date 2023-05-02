@@ -27,28 +27,40 @@ const Questions = (props) => {
                     />
                 </div>
                 <h5 className='mt-4'>Add Question:</h5>
-                <div className="question">
-                    <div className="q-input col-6">
-                        <input type="email" className="form-control" placeholder='Description' />
-                    </div>
-                    <div className='q-img-upload'>
-                        <label className='img-upload-label'>Upload Image</label>
-                        <input type='file' hidden />
-                        <span>0 files uploaded</span>
+                <div className='quiz-content mt-3'>
+                    <div className="question">
+                        <div className="q-input col-6">
+                            <input type="email" className="form-control" placeholder='Description' />
+                        </div>
+                        <div className='q-img-upload'>
+                            <label className='img-upload-label'>Upload Image</label>
+                            <input type='file' hidden />
+                            <span>0 files uploaded</span>
+
+                        </div>
+                        <span ><BsPatchPlusFill className='add-q' /></span>
+                        <span ><BsPatchMinusFill className='remove-q' /></span>
 
                     </div>
-                    <span ><BsPatchPlusFill className='add-q' /></span>
-                    <span ><BsPatchMinusFill className='remove-q' /></span>
-
-                </div>
-                <div className="answer mt-3">
-                    <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                    <div className="a-input col-6">
-                        <input type="text" className="form-control" placeholder="Answer 1" />
+                    <div className="answer mt-3">
+                        <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                        <div className="a-input col-6">
+                            <input type="text" className="form-control" placeholder="Answer 1" />
+                        </div>
+                        <span><AiFillPlusSquare className='add-a' /></span>
+                        <span><AiFillMinusSquare className='remove-a' /></span>
                     </div>
-                    <span><AiFillPlusSquare className='add-a' /></span>
-                    <span><AiFillMinusSquare className='remove-a' /></span>
+                    <div className="answer mt-3">
+                        <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                        <div className="a-input col-6">
+                            <input type="text" className="form-control" placeholder="Answer 1" />
+                        </div>
+                        <span><AiFillPlusSquare className='add-a' /></span>
+                        <span><AiFillMinusSquare className='remove-a' /></span>
+                    </div>
                 </div>
+
+
             </div>
 
         </div>
