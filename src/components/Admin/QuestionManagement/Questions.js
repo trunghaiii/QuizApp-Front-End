@@ -20,13 +20,13 @@ const Questions = (props) => {
         [
             {
                 id: uuidv4(),
-                desciption: 'questions 111',
+                desciption: '',
                 imageFile: '',
                 imageName: '',
                 answers: [
                     {
                         id: uuidv4(),
-                        description: 'answer 111',
+                        description: '',
                         isCorrect: false
                     }
                 ]
@@ -82,7 +82,50 @@ const Questions = (props) => {
         }
     }
 
-    console.log("questionnn:  ", questions);
+    const handleOnChange = (questionId, value) => {
+        let questionsClone = _.cloneDeep(questions);
+        let index = questionsClone.findIndex(item => item.id === questionId);
+        if (index > -1) {
+            questionsClone[index].desciption = value;
+            setQuestions(questionsClone);
+        }
+
+    }
+
+    const handleFileChange = (questionId, event) => {
+        let questionsClone = _.cloneDeep(questions);
+        let index = questionsClone.findIndex(item => item.id === questionId);
+        if (index > -1 && event.target && event.target.files && event.target.files[0]) {
+            questionsClone[index].imageFile = event.target.files[0];
+            questionsClone[index].imageName = event.target.files[0].name;
+            setQuestions(questionsClone);
+        }
+    }
+
+    const handleAnswerChange = (type, questionId, answerId, value) => {
+        let questionsClone = _.cloneDeep(questions);
+        let index = questionsClone.findIndex(item => item.id === questionId);
+        if (index > -1) {
+            questionsClone[index].answers =
+                questionsClone[index].answers.map(answer => {
+                    if (answer.id === answerId) {
+                        if (type === 'CHECKBOX') {
+                            answer.isCorrect = value
+                        }
+                        if (type === 'INPUT') {
+                            answer.description = value
+                        }
+                    }
+                    return answer
+                })
+
+            setQuestions(questionsClone)
+        }
+    }
+
+    const handleSubmitQuestion = () => {
+        console.log('question>>>', questions);
+    }
     return (
         <div className="manage-question-container">
             <div className="title">
@@ -112,12 +155,21 @@ const Questions = (props) => {
                                                 className="form-control"
                                                 placeholder='Description'
                                                 value={question.desciption}
+                                                onChange={(event) => handleOnChange(question.id, event.target.value)}
                                             />
                                         </div>
                                         <div className='q-img-upload'>
-                                            <label className='img-upload-label'>Upload Image</label>
-                                            <input type='file' hidden />
-                                            <span>0 files uploaded</span>
+                                            <label
+                                                className='img-upload-label'
+                                                htmlFor={question.id}
+                                            >Upload Image</label>
+                                            <input
+                                                id={question.id}
+                                                type='file'
+                                                hidden
+                                                onChange={(event) => handleFileChange(question.id, event)}
+                                            />
+                                            <span>{question.imageName ? question.imageName : '0 files uploaded'}</span>
 
                                         </div>
                                         <span onClick={() => handleAddRemoveQuestion("ADD", question.id)}>
@@ -133,13 +185,22 @@ const Questions = (props) => {
                                         question.answers.map((answer, index) => {
                                             return (
                                                 <div key={answer.id} className="answer mt-3">
-                                                    <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                                                    <input
+                                                        className="form-check-input"
+                                                        type="checkbox"
+                                                        checked={answer.isCorrect}
+                                                        id="flexCheckDefault"
+                                                        onChange={(event) =>
+                                                            handleAnswerChange('CHECKBOX', question.id, answer.id, event.target.checked)}
+                                                    />
                                                     <div className="a-input col-6">
                                                         <label >Answers {index + 1} </label>
                                                         <input
                                                             type="text"
                                                             className="form-control"
                                                             value={answer.description}
+                                                            onChange={(event) =>
+                                                                handleAnswerChange('INPUT', question.id, answer.id, event.target.value)}
                                                         />
                                                     </div>
                                                     <span onClick={() => handleAddRemoveAnswer("ADD", question.id, answer.id)}>
@@ -158,7 +219,16 @@ const Questions = (props) => {
                             )
                         })
                     }
+                    {questions && questions.length > 0 &&
+                        <div>
+                            <button
+                                className='btn btn-warning mt-3 mb-5'
+                                onClick={() => handleSubmitQuestion()}
+                            >Save Questions</button>
+                        </div>
 
+
+                    }
 
                 </div>
 
