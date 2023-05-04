@@ -6,10 +6,26 @@ import { AiFillMinusSquare, AiFillPlusSquare } from "react-icons/ai";
 import { v4 as uuidv4 } from 'uuid';
 import { useEffect, useState } from 'react';
 import _ from 'lodash'
+import { toast } from "react-toastify"
 import { getAllQuiz, postCreateQuestionForQuiz, postCreateAnswerForQuestion } from "../../../services/apiService"
 
 
 const Questions = (props) => {
+    const initQuestions = [
+        {
+            id: uuidv4(),
+            description: '',
+            imageFile: '',
+            imageName: '',
+            answers: [
+                {
+                    id: uuidv4(),
+                    description: '',
+                    isCorrect: false
+                }
+            ]
+        }
+    ]
 
     const [listQuiz, setListQuiz] = useState([])
     const [selectedOption, setSelectedOption] = useState(null);
@@ -32,23 +48,7 @@ const Questions = (props) => {
         }
     }
 
-    const [questions, setQuestions] = useState(
-        [
-            {
-                id: uuidv4(),
-                description: '',
-                imageFile: '',
-                imageName: '',
-                answers: [
-                    {
-                        id: uuidv4(),
-                        description: '',
-                        isCorrect: false
-                    }
-                ]
-            }
-        ]
-    )
+    const [questions, setQuestions] = useState(initQuestions)
 
     const handleAddRemoveQuestion = (type, id) => {
         if (type === "ADD") {
@@ -141,6 +141,32 @@ const Questions = (props) => {
 
     const handleSubmitQuestion = async () => {
 
+        // validate quiz input
+        if (_.isEmpty(selectedOption)) {
+            toast.error("Please choose the Quiz")
+            return;
+        }
+
+        // validate question input:
+        for (let i = 0; i < questions.length; i++) {
+            if (!questions[i].description) {
+                toast.error(`Please fill in the question ${i + 1} input`)
+                return;
+            }
+        }
+
+        // validate answer input
+        for (let i = 0; i < questions.length; i++) {
+            for (let j = 0; j < questions[i].answers.length; j++) {
+                if (!questions[i].answers[j].description) {
+                    toast.error(`Please fill in the answer ${j + 1} input of question ${i + 1} `)
+                    return;
+                }
+            }
+        }
+
+
+
         // submit question
         for (let question of questions) {
             let q = await postCreateQuestionForQuiz(selectedOption.value, question.description, question.imageFile)
@@ -151,17 +177,9 @@ const Questions = (props) => {
             }
         }
 
-        // await Promise.all(questions.map(async (question) => {
-        //     let q = await postCreateQuestionForQuiz(selectedOption.value, question.description, question.imageFile)
-        //     await Promise.all(question.answers.map(async (answer) => {
-        //         let a = await postCreateAnswerForQuestion(answer.description, answer.isCorrect, q.DT.id);
-        //         console.log(a);
-        //     }))
-        // }))
-        // console.log('question>>>', questions, selectedOption);
+        toast.success("Created Questions and Answer Successfully")
+        setQuestions(initQuestions)
 
-        // let a = await postCreateAnswerForQuestion('answer', 'true', 8);
-        // console.log(a);
 
 
     }
