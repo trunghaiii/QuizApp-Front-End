@@ -4,23 +4,39 @@ import "./Questions.scss"
 import { BsPatchPlusFill, BsPatchMinusFill } from "react-icons/bs";
 import { AiFillMinusSquare, AiFillPlusSquare } from "react-icons/ai";
 import { v4 as uuidv4 } from 'uuid';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import _ from 'lodash'
+import { getAllQuiz, postCreateQuestionForQuiz, postCreateAnswerForQuestion } from "../../../services/apiService"
 
 
 const Questions = (props) => {
 
-    const options = [
-        { value: 'chocolate', label: 'Chocolate' },
-        { value: 'strawberry', label: 'Strawberry' },
-        { value: 'vanilla', label: 'Vanilla' },
-    ];
+    const [listQuiz, setListQuiz] = useState([])
+    const [selectedOption, setSelectedOption] = useState(null);
+
+    useEffect(() => {
+        fetchAllQuiz()
+    }, [])
+
+    const fetchAllQuiz = async () => {
+        let data = await getAllQuiz();
+
+        const newData = data.DT.map(quiz => {
+            return {
+                value: quiz.id,
+                label: `${quiz.id}-${quiz.description}`
+            }
+        })
+        if (data && data.EC === 0) {
+            setListQuiz(newData)
+        }
+    }
 
     const [questions, setQuestions] = useState(
         [
             {
                 id: uuidv4(),
-                desciption: '',
+                description: '',
                 imageFile: '',
                 imageName: '',
                 answers: [
@@ -38,7 +54,7 @@ const Questions = (props) => {
         if (type === "ADD") {
             const newQuestion = {
                 id: uuidv4(),
-                desciption: '',
+                description: '',
                 imageFile: '',
                 imageName: '',
                 answers: [
@@ -86,7 +102,7 @@ const Questions = (props) => {
         let questionsClone = _.cloneDeep(questions);
         let index = questionsClone.findIndex(item => item.id === questionId);
         if (index > -1) {
-            questionsClone[index].desciption = value;
+            questionsClone[index].description = value;
             setQuestions(questionsClone);
         }
 
@@ -123,9 +139,24 @@ const Questions = (props) => {
         }
     }
 
-    const handleSubmitQuestion = () => {
-        console.log('question>>>', questions);
+    const handleSubmitQuestion = async () => {
+
+        await Promise.all(questions.map(async (question) => {
+            let q = await postCreateQuestionForQuiz(selectedOption.value, question.description, question.imageFile)
+            await Promise.all(question.answers.map(async (answer) => {
+                let a = await postCreateAnswerForQuestion(answer.description, answer.isCorrect, q.DT.id);
+                console.log(a);
+            }))
+        }))
+        console.log('question>>>', questions, selectedOption);
+
+        // let a = await postCreateAnswerForQuestion('answer', 'true', 8);
+        // console.log(a);
+
+
     }
+
+    //console.log(listQuiz);
     return (
         <div className="manage-question-container">
             <div className="title">
@@ -136,9 +167,9 @@ const Questions = (props) => {
                 <div className="quiz col-6 mt-3">
                     <h5>Select Quiz:</h5>
                     <Select
-                        // defaultValue={selectedOption}
-                        // onChange={setSelectedOption}
-                        options={options}
+                        defaultValue={selectedOption}
+                        onChange={setSelectedOption}
+                        options={listQuiz}
                     />
                 </div>
                 <h5 className='mt-4'>Add Question:</h5>
@@ -154,7 +185,7 @@ const Questions = (props) => {
                                                 type="email"
                                                 className="form-control"
                                                 placeholder='Description'
-                                                value={question.desciption}
+                                                value={question.description}
                                                 onChange={(event) => handleOnChange(question.id, event.target.value)}
                                             />
                                         </div>
