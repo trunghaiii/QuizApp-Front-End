@@ -141,14 +141,24 @@ const Questions = (props) => {
 
     const handleSubmitQuestion = async () => {
 
-        await Promise.all(questions.map(async (question) => {
+        // submit question
+        for (let question of questions) {
             let q = await postCreateQuestionForQuiz(selectedOption.value, question.description, question.imageFile)
-            await Promise.all(question.answers.map(async (answer) => {
+            // submit answer
+            for (let answer of question.answers) {
                 let a = await postCreateAnswerForQuestion(answer.description, answer.isCorrect, q.DT.id);
                 console.log(a);
-            }))
-        }))
-        console.log('question>>>', questions, selectedOption);
+            }
+        }
+
+        // await Promise.all(questions.map(async (question) => {
+        //     let q = await postCreateQuestionForQuiz(selectedOption.value, question.description, question.imageFile)
+        //     await Promise.all(question.answers.map(async (answer) => {
+        //         let a = await postCreateAnswerForQuestion(answer.description, answer.isCorrect, q.DT.id);
+        //         console.log(a);
+        //     }))
+        // }))
+        // console.log('question>>>', questions, selectedOption);
 
         // let a = await postCreateAnswerForQuestion('answer', 'true', 8);
         // console.log(a);
