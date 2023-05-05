@@ -1,12 +1,13 @@
 
 import { useEffect, useState } from "react"
-import { getAllQuiz } from "../../../services/apiService"
+//import { getAllQuiz } from "../../../services/apiService"
 import ModalUpdateQuiz from "./ModalUpdateQuiz/ModalUpdateQuiz";
 import ModalDeleteQuiz from "./ModalDeleteQuiz/ModalDeleteQuiz";
 
 const QuizTable = (props) => {
 
-    const [quizList, setQuizList] = useState([]);
+    // const [quizList, setQuizList] = useState([]);
+    const { fetchAllQuiz, quizList } = props;
     const [dataUpdate, setDataUpdate] = useState({})
     const [showModalUpdateQuiz, setShowModalUpdateQuiz] = useState(false)
     const [showModalDeleteQuiz, setShowModalDeleteQuiz] = useState(false)
@@ -17,13 +18,13 @@ const QuizTable = (props) => {
         fetchAllQuiz()
     }, [])
 
-    const fetchAllQuiz = async () => {
-        let data = await getAllQuiz();
+    // const fetchAllQuiz = async () => {
+    //     let data = await getAllQuiz();
 
-        if (data && data.EC === 0) {
-            setQuizList(data.DT)
-        }
-    }
+    //     if (data && data.EC === 0) {
+    //         setQuizList(data.DT)
+    //     }
+    // }
 
     const handleEditClick = (data) => {
         setDataUpdate(data)

@@ -2,7 +2,7 @@
 import Select from 'react-select';
 import "./QuizManagement.scss"
 import { useState } from 'react';
-import { postAddingNewQuiz } from "../../../services/apiService"
+import { postAddingNewQuiz, getAllQuiz } from "../../../services/apiService"
 import { toast } from "react-toastify"
 import QuizTable from './QuizTable';
 import Accordion from 'react-bootstrap/Accordion';
@@ -21,6 +21,7 @@ const QuizManagement = (props) => {
     const [description, setDescription] = useState("")
     const [type, setType] = useState("EASY")
     const [image, setImage] = useState(null)
+    const [quizList, setQuizList] = useState([]);
 
     const handleUploadImage = (event) => {
         if (event.target.files[0]) {
@@ -39,12 +40,21 @@ const QuizManagement = (props) => {
             setDescription("")
             //setType("")
             setImage(null)
+            fetchAllQuiz()
         } else {
             toast.error(data.EM)
         }
 
         //console.log(data);
         //alert("okla")
+    }
+
+    const fetchAllQuiz = async () => {
+        let data = await getAllQuiz();
+
+        if (data && data.EC === 0) {
+            setQuizList(data.DT)
+        }
     }
     return (
         <div className="quiz-manage-container">
@@ -99,7 +109,10 @@ const QuizManagement = (props) => {
                     <Accordion.Body>
                         <h5 className='mt-4'>Quiz List: </h5>
                         <div className='quiz-list mt-2'>
-                            <QuizTable />
+                            <QuizTable
+                                quizList={quizList}
+                                fetchAllQuiz={fetchAllQuiz}
+                            />
                         </div>
                     </Accordion.Body>
                 </Accordion.Item>

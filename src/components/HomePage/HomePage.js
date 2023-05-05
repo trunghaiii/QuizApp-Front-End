@@ -8,7 +8,9 @@ const HomePage = () => {
                 <Header />
             </div>
             <div className="home-page-content">
+
                 <Outlet />
+
             </div>
 
         </div>
