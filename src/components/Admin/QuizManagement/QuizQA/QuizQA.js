@@ -1,7 +1,7 @@
 
 import Select from 'react-select';
 import "./QuizQA.scss"
-import { BsPatchPlusFill, BsPatchMinusFill } from "react-icons/bs";
+import { BsPatchPlusFill, BsPatchMinusFill, BsImages } from "react-icons/bs";
 import { AiFillMinusSquare, AiFillPlusSquare } from "react-icons/ai";
 import { v4 as uuidv4 } from 'uuid';
 import { useEffect, useState } from 'react';
@@ -221,14 +221,27 @@ const QuizQA = (props) => {
                                             <label
                                                 className='img-upload-label'
                                                 htmlFor={question.id}
-                                            >Upload Image</label>
+                                            >
+                                                <BsImages className='img' />
+                                            </label>
+                                            {/* <label
+                                                className='img-upload-label'
+                                                htmlFor={question.id}
+                                            >Upload Image</label> */}
                                             <input
                                                 id={question.id}
                                                 type='file'
                                                 hidden
                                                 onChange={(event) => handleFileChange(question.id, event)}
                                             />
-                                            <span>{question.imageName ? question.imageName : '0 files uploaded'}</span>
+                                            {
+                                                question.imageName ?
+                                                    <div className='q-img'>
+                                                        <img src={URL.createObjectURL(question.imageFile)} />
+                                                    </div>
+
+
+                                                    : <span>0 files uploaded</span>}
 
                                         </div>
                                         <span onClick={() => handleAddRemoveQuestion("ADD", question.id)}>

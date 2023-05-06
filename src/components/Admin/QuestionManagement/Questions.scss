@@ -8,13 +8,30 @@
 
 
         .q-img-upload {
+            display: flex;
+            align-items: center;
+            gap: 10px;
 
             .img-upload-label {
-                border: 1px solid red;
-                padding: 2px;
-                border-radius: 5px;
-                margin-right: 10px;
+                width: 30px;
+                height: 30px;
                 cursor: pointer;
+
+                .img {
+                    width: 100%;
+                    height: 100%;
+                    color: green;
+                }
+            }
+
+            .q-img {
+                width: 100px;
+                height: 70px;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
             }
         }
 
