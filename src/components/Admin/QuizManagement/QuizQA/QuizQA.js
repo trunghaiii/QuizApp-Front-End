@@ -7,7 +7,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { useEffect, useState } from 'react';
 import _ from 'lodash'
 import { toast } from "react-toastify"
-import { getAllQuiz, postCreateQuestionForQuiz, postCreateAnswerForQuestion } from "../../../../services/apiService"
+import {
+    getAllQuiz, postCreateQuestionForQuiz,
+    postCreateAnswerForQuestion, getQuizQA
+} from "../../../../services/apiService"
 
 
 const QuizQA = (props) => {
@@ -34,6 +37,10 @@ const QuizQA = (props) => {
         fetchAllQuiz()
     }, [])
 
+    useEffect(() => {
+        fetchQuizQA();
+    }, [selectedOption])
+
     const fetchAllQuiz = async () => {
         let data = await getAllQuiz();
 
@@ -46,6 +53,27 @@ const QuizQA = (props) => {
         if (data && data.EC === 0) {
             setListQuiz(newData)
         }
+    }
+
+    function urltoFile(url, filename, mimeType) {
+        return (fetch(url)
+            .then(function (res) { return res.arrayBuffer(); })
+            .then(function (buf) { return new File([buf], filename, { type: mimeType }); })
+        );
+    }
+    const fetchQuizQA = async () => {
+        let response = await getQuizQA(selectedOption.value);
+        let newQA = [];
+        for (let i = 0; i < response.DT.qa.length; i++) {
+            let q = response.DT.qa[i];
+            if (q.imageFile) {
+                q.imageFile =
+                    await urltoFile(`data:image/png;base64,${q.imageFile}`, `Question${i}.png`, 'image/png');
+            }
+            newQA.push(q)
+        }
+        setQuestions(newQA);
+        console.log(newQA);
     }
 
     const [questions, setQuestions] = useState(initQuestions)
@@ -173,7 +201,7 @@ const QuizQA = (props) => {
             // submit answer
             for (let answer of question.answers) {
                 let a = await postCreateAnswerForQuestion(answer.description, answer.isCorrect, q.DT.id);
-                console.log(a);
+                //console.log(a);
             }
         }
 
@@ -206,7 +234,7 @@ const QuizQA = (props) => {
                         questions.map((question, index) => {
                             return (
                                 <>
-                                    <div key={question.id} className="question">
+                                    <div key={question.id} className="question mt-5">
                                         <div className="q-input col-6">
                                             <label >Question {index + 1} 's description</label>
                                             <input
@@ -235,7 +263,7 @@ const QuizQA = (props) => {
                                                 onChange={(event) => handleFileChange(question.id, event)}
                                             />
                                             {
-                                                question.imageName ?
+                                                question.imageFile ?
                                                     <div className='q-img'>
                                                         <img src={URL.createObjectURL(question.imageFile)} />
                                                     </div>

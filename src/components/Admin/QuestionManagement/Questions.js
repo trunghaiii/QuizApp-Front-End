@@ -235,7 +235,7 @@ const Questions = (props) => {
                                                 onChange={(event) => handleFileChange(question.id, event)}
                                             />
                                             {
-                                                question.imageName ?
+                                                question.imageFile ?
                                                     <div className='q-img'>
                                                         <img src={URL.createObjectURL(question.imageFile)} />
                                                     </div>
