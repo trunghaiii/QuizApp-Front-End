@@ -9,7 +9,8 @@ import _ from 'lodash'
 import { toast } from "react-toastify"
 import {
     getAllQuiz, postCreateQuestionForQuiz,
-    postCreateAnswerForQuestion, getQuizQA
+    postCreateAnswerForQuestion, getQuizQA,
+    postUpsertQA
 } from "../../../../services/apiService"
 
 
@@ -31,6 +32,7 @@ const QuizQA = (props) => {
     ]
 
     const [listQuiz, setListQuiz] = useState([])
+    const [questions, setQuestions] = useState(initQuestions)
     const [selectedOption, setSelectedOption] = useState(null);
 
     useEffect(() => {
@@ -73,10 +75,10 @@ const QuizQA = (props) => {
             newQA.push(q)
         }
         setQuestions(newQA);
-        console.log(newQA);
+        //console.log(newQA);
     }
 
-    const [questions, setQuestions] = useState(initQuestions)
+
 
     const handleAddRemoveQuestion = (type, id) => {
         if (type === "ADD") {
@@ -195,23 +197,42 @@ const QuizQA = (props) => {
 
 
 
-        // submit question
-        for (let question of questions) {
-            let q = await postCreateQuestionForQuiz(selectedOption.value, question.description, question.imageFile)
-            // submit answer
-            for (let answer of question.answers) {
-                let a = await postCreateAnswerForQuestion(answer.description, answer.isCorrect, q.DT.id);
-                //console.log(a);
+        // Update QA
+        let questionClonee = _.cloneDeep(questions);
+        for (let i = 0; i < questionClonee.length; i++) {
+            if (questionClonee[i].imageFile) {
+                questionClonee[i].imageFile =
+                    await toBase64(questionClonee[i].imageFile)
+                questionClonee[i].imageFile = questionClonee[i].imageFile.split("base64,")[1]
             }
         }
 
-        toast.success("Created Questions and Answer Successfully")
-        setQuestions(initQuestions)
+        let responsee = await postUpsertQA({
+            quizId: selectedOption.value,
+            questions: questionClonee
+
+        })
+
+        if (responsee && responsee.EC === 0) {
+            toast.success(responsee.EM)
+            fetchQuizQA();
+            console.log("qqq1", questions);
+        }
+
+
+        //setQuestions(initQuestions)
 
 
 
     }
+    const toBase64 = file => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+    });
 
+    console.log("qqq2", questions);
     //console.log(listQuiz);
     return (
         <div className="manage-question-container">
