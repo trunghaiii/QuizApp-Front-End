@@ -66,7 +66,7 @@ const ModalCreateUser = (props) => {
         // call API
 
         let data = await postCreateNewUser(email, password, username, role, image)
-        console.log(data);
+        //console.log(data);
 
         if (data && data.EC === 0) {
             toast.success(data.EM)
