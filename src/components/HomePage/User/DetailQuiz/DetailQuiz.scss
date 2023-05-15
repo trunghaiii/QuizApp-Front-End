@@ -45,5 +45,38 @@
     .right-content {
         border: 1px solid green;
         width: 30%;
+
+        .time-countdown {
+            border-bottom: 1px dashed;
+            padding: 29px;
+            text-align: center;
+
+            .time-text {
+                font-size: 40px;
+                font-weight: 500;
+            }
+        }
+
+        .question-container {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            flex-wrap: wrap;
+
+            .question {
+                border: 1px solid;
+                height: 40px;
+                width: 40px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 50%;
+                cursor: pointer;
+
+                &:hover {
+                    color: red;
+                }
+            }
+        }
     }
 }
