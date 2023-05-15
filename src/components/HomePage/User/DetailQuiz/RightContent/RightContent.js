@@ -1,12 +1,19 @@
+import CountDown from "./CountDown";
 
 const RightContent = (props) => {
     const { questionData } = props;
+
+    const timeUpAction = () => {
+        props.handleFinish()
+    }
 
     //console.log(questionData);
     return (
         <>
             <div className="time-countdown">
-                <div className="time-text">10:10</div>
+                <CountDown
+                    timeUpAction={timeUpAction}
+                />
             </div>
             <div className="question-container">
                 {questionData && questionData.length > 0

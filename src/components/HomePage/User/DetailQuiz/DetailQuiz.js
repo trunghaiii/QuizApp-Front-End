@@ -180,6 +180,7 @@ const DetailQuiz = (props) => {
             <div className='right-content'>
                 <RightContent
                     questionData={questionData}
+                    handleFinish={handleFinish}
                 />
             </div>
             <ModalResult
