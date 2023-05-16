@@ -8,12 +8,31 @@ import './Header.scss';
 import { Link, useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import { useSelector, useDispatch } from 'react-redux'
+import { postLogOut } from '../../../services/apiService';
+import { toast } from "react-toastify"
+import { user_logout_success } from "../../../redux/slices/userSlice"
+
 
 const Header = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const account = useSelector((state) => state.user.account)
     const isAuthenticated = useSelector((state) => state.user.isAuthenticated)
+
+    const handleLogOut = async () => {
+        let response = await postLogOut(account.refresh_token)
+
+        if (response && response.EC === 0) {
+            // clear redux data
+            dispatch(user_logout_success())
+            navigate("/login")
+            toast.success(response.EM)
+        } else {
+            toast.error(response.EM)
+        }
+
+    }
 
     return (
         <div className='nav-container'>
@@ -37,9 +56,12 @@ const Header = () => {
 
                                 :
                                 <>
-                                    <DropdownButton id="dropdown-basic-button" title="Dropdown button">
-                                        <Dropdown.Item href="#/action-1">Logout</Dropdown.Item>
+                                    <DropdownButton variant="secondary" id="dropdown-basic-button" title="Settings">
                                         <Dropdown.Item href="#/action-2">Profile</Dropdown.Item>
+                                        <Dropdown.Item
+                                            href="#/action-1"
+                                            onClick={() => handleLogOut()}
+                                        >Logout</Dropdown.Item>
                                     </DropdownButton>
                                 </>
 
