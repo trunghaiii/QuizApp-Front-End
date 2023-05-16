@@ -7,6 +7,19 @@ const RightContent = (props) => {
         props.handleFinish()
     }
 
+    const handleDoneQuestion = (question) => {
+        //console.log(question);
+        const isAnswered = question.answers.find(a => a.isSelected === true);
+        if (isAnswered) {
+            return "question selected"
+        }
+        return "question"
+    }
+
+    const handleClickQuestion = (index) => {
+        props.setIndex(index)
+    }
+
     //console.log(questionData);
     return (
         <>
@@ -20,7 +33,10 @@ const RightContent = (props) => {
 
                     && questionData.map((items, index) => {
                         return (
-                            <div className="question">{index + 1}</div>
+                            <div
+                                className={handleDoneQuestion(items)}
+                                onClick={() => handleClickQuestion(index)}
+                            >{index + 1}</div>
                         )
                     })
                 }
