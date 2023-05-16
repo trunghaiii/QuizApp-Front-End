@@ -21,6 +21,8 @@ import DetailQuiz from './components/HomePage/User/DetailQuiz/DetailQuiz';
 import QuizManagement from './components/Admin/QuizManagement/QuizManagement';
 import Questions from './components/Admin/QuestionManagement/Questions';
 
+import PrivateRoute from './routes/PrivateRoute';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 
@@ -44,7 +46,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/user",
-        element: <QuizList />,
+        element: <PrivateRoute><QuizList /></PrivateRoute>,
       },
       {
         path: "/",
@@ -54,7 +56,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin",
-    element: <Admin />,
+    element: <PrivateRoute><Admin /></PrivateRoute>,
     children: [
       {
         path: "/admin",
