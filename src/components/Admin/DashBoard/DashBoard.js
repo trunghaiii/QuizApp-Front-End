@@ -4,56 +4,53 @@ import { BarChart, CartesianGrid, XAxis, Tooltip, Legend, Bar, YAxis } from 'rec
 const DashBoard = () => {
     const data = [
         {
-            "name": "Page A",
-            "uv": 4000,
-            "pv": 2400
+            "name": "Users",
+            "user": 10,
         },
         {
-            "name": "Page B",
-            "uv": 3000,
-            "pv": 1398
+            "name": "Admins",
+            "admin": 11,
         },
         {
-            "name": "Page C",
-            "uv": 2000,
-            "pv": 9800
+            "name": "Quizs",
+            "quiz": 10,
         },
         {
-            "name": "Page D",
-            "uv": 2780,
-            "pv": 3908
-        },
-        {
-            "name": "Page E",
-            "uv": 1890,
-            "pv": 4800
-        },
-        {
-            "name": "Page F",
-            "uv": 2390,
-            "pv": 3800
-        },
-        {
-            "name": "Page G",
-            "uv": 3490,
-            "pv": 4300
+            "name": "Questions",
+            "question": 15,
         }
     ]
     return (
         <div className="dashboard-container">
             <div className="l-content">
-                <div className="total-users">Total Users</div>
-                <div className="total-quizs">Total Quizs</div>
+                <div className="total total-users">
+                    <div className="title">Total Users</div>
+                    <div className="number">10</div>
+                </div>
+                <div className="total total-admins">
+                    <div className="title"> Total Admins</div>
+                    <div className="number">10</div>
+                </div>
+                <div className="total total-quizs">
+                    <div className="title"> Total Quizs</div>
+                    <div className="number">10</div>
+                </div>
+                <div className="total total-questions">
+                    <div className="title"> Total Questions</div>
+                    <div className="number">10</div>
+                </div>
             </div>
             <div className="r-content">
                 <BarChart width={500} height={300} data={data}>
-                    <CartesianGrid strokeDasharray="3 3" />
+                    {/* <CartesianGrid strokeDasharray="3 3" /> */}
                     <XAxis dataKey="name" />
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Bar dataKey="pv" fill="#8884d8" />
-                    <Bar dataKey="uv" fill="#82ca9d" />
+                    <Bar dataKey="user" fill="#8884d8" />
+                    <Bar dataKey="admin" fill="#82ca9d" />
+                    <Bar dataKey="quiz" fill="red" />
+                    <Bar dataKey="question" fill="blue" />
                 </BarChart>
             </div>
         </div>
