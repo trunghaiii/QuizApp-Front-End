@@ -1,0 +1,37 @@
+.dashboard-container {
+    display: flex;
+    height: 100%;
+
+    .l-content {
+        border: 1px solid red;
+        width: 50%;
+        height: 100%;
+        display: flex;
+
+        .total-users {
+            border: 1px solid grey;
+            width: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .total-quizs {
+            border: 1px solid grey;
+            width: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
+    .r-content {
+        border: 1px solid green;
+        width: 50%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+    }
+}
