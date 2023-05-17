@@ -120,6 +120,10 @@ const postLogOut = (refresh_token) => {
     return axios.post(`api/v1/auth/logout`, { refresh_token });
 }
 
+const getDashBoardOverview = () => {
+    return axios.get(`api/v1/participant/overview`);
+}
+
 export {
     postCreateNewUser, getAllUsers,
     putUpdateUser, deleteUser, getAllUsersPaginate,
@@ -129,5 +133,5 @@ export {
     getAllQuiz, putUpdateQuiz,
     deleteQuiz, postCreateQuestionForQuiz, postCreateAnswerForQuestion,
     postAssignQuiz, getQuizQA, postUpsertQA,
-    postLogOut
+    postLogOut, getDashBoardOverview
 }
