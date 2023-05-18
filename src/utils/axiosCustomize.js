@@ -3,7 +3,6 @@ import NProgress from 'nprogress'
 import store from "../redux/store"
 
 
-
 const instance = axios.create({
     baseURL: 'http://localhost:8080/'
 });
@@ -31,6 +30,12 @@ instance.interceptors.response.use(function (response) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
     NProgress.done();
+
+    // handle when jwt token exprired:
+    if (error && error.response && error.response.data && error.response.data.EC === -11) {
+        window.location.href = '/login'
+    }
+    //console.log(error.response.data);
     return error && error.response && error.response.data ?
         error.response.data : Promise.reject(error);
 });
