@@ -43,6 +43,20 @@ export const userSlice = createSlice({
 
             //console.log('okla', action.payload);
         },
+        user_update_profile_success: (state, action) => {
+            // Redux Toolkit allows us to write "mutating" logic in reducers. It
+            // doesn't actually mutate the state because it uses the Immer library,
+            // which detects changes to a "draft state" and produces a brand new
+            // immutable state based off those changes
+            // state.account.access_token = ''
+            // state.account.refresh_token = ''
+            state.account.username = action?.payload?.username
+            state.account.image = action?.payload?.image
+            // state.account.role = ''
+            // state.isAuthenticated = false
+
+            //console.log('okla', action.payload);
+        },
 
         // decrement: (state) => {
         //     state.value -= 1
@@ -54,6 +68,8 @@ export const userSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { fetch_user_login_success, user_logout_success } = userSlice.actions
+export const { fetch_user_login_success, user_logout_success,
+    user_update_profile_success
+} = userSlice.actions
 
 export default userSlice.reducer

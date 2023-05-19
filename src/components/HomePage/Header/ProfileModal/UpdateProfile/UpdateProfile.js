@@ -1,8 +1,12 @@
 import { useState } from "react"
 import "./UpdateProfile.scss"
-
+import { postUpdateProfile } from "../../../../../services/apiService"
+import { toast } from "react-toastify"
+import { useDispatch } from "react-redux"
+import { user_update_profile_success } from "../../../../../redux/slices/userSlice"
 
 const UpdateProfile = (props) => {
+    const dispatch = useDispatch();
 
     const [username, setUsername] = useState('')
     const [profileImg, setProfileImg] = useState('')
@@ -15,6 +19,19 @@ const UpdateProfile = (props) => {
             setProfileImg(event.target.files[0])
             setPreviewImg(URL.createObjectURL(event.target.files[0]))
         }
+    }
+
+    const handleUpdateProfile = async () => {
+        const response = await postUpdateProfile(username, profileImg);
+
+        if (response && response.EC === 0) {
+            dispatch(user_update_profile_success(response.DT))
+            toast.success(response.EM)
+        } else {
+            toast.error(response.EM)
+        }
+        //console.log(response);
+        // alert("mem")
     }
 
     return (
@@ -45,7 +62,12 @@ const UpdateProfile = (props) => {
                         <span>Preview-Profile-Picture</span>
                 }
             </div>
-            <div className="mt-2"><button className="btn btn-primary">Save Profile</button></div>
+            <div className="mt-2">
+                <button
+                    className="btn btn-primary"
+                    onClick={() => handleUpdateProfile()}
+                >Save Profile</button>
+            </div>
         </div>
     )
 }

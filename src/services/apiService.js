@@ -124,6 +124,13 @@ const getDashBoardOverview = () => {
     return axios.get(`api/v1/participant/overview`);
 }
 
+const postUpdateProfile = (username, profileImage) => {
+    const data = new FormData();
+    data.append('username', username);
+    data.append('profileImage', profileImage);
+
+    return axios.post('api/v1/auth/profile', data);
+}
 export {
     postCreateNewUser, getAllUsers,
     putUpdateUser, deleteUser, getAllUsersPaginate,
@@ -133,5 +140,6 @@ export {
     getAllQuiz, putUpdateQuiz,
     deleteQuiz, postCreateQuestionForQuiz, postCreateAnswerForQuestion,
     postAssignQuiz, getQuizQA, postUpsertQA,
-    postLogOut, getDashBoardOverview
+    postLogOut, getDashBoardOverview,
+    postUpdateProfile
 }
