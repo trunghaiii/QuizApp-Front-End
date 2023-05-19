@@ -1,9 +1,24 @@
 import { useState } from "react"
+import { postUpdatePassword } from "../../../../../services/apiService"
+import { toast } from "react-toastify"
 
 
 const UpdatePassword = () => {
     const [newPassword, setNewPassword] = useState('')
     const [currentPassword, setCurrentPassword] = useState('')
+
+    const handleUpdatePassword = async () => {
+        const response = await postUpdatePassword(currentPassword, newPassword);
+
+        if (response && response.EC === 0) {
+            toast.success(response.EM);
+        } else {
+            toast.error(response.EM)
+        }
+
+        //console.log(response);
+        //alert("olalalaal")
+    }
 
     return (
         <div className="updateProfile-container">
@@ -25,7 +40,12 @@ const UpdatePassword = () => {
                     onChange={(event) => setNewPassword(event.target.value)}
                 />
             </div>
-            <div className="mt-2"><button className="btn btn-primary">Save Password</button></div>
+            <div className="mt-2">
+                <button
+                    className="btn btn-primary"
+                    onClick={() => handleUpdatePassword()}
+                >Save Password</button>
+            </div>
         </div>
 
     )

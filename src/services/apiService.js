@@ -131,6 +131,10 @@ const postUpdateProfile = (username, profileImage) => {
 
     return axios.post('api/v1/auth/profile', data);
 }
+
+const postUpdatePassword = (current_password, new_password) => {
+    return axios.post(`api/v1/auth/change-password`, { current_password, new_password });
+}
 export {
     postCreateNewUser, getAllUsers,
     putUpdateUser, deleteUser, getAllUsersPaginate,
@@ -141,5 +145,5 @@ export {
     deleteQuiz, postCreateQuestionForQuiz, postCreateAnswerForQuestion,
     postAssignQuiz, getQuizQA, postUpsertQA,
     postLogOut, getDashBoardOverview,
-    postUpdateProfile
+    postUpdateProfile, postUpdatePassword
 }
