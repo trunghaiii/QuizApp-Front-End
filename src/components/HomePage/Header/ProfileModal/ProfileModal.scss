@@ -1,0 +1,19 @@
+.general-detail-profile {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+
+    .detail-img {
+        img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+        }
+    }
+
+    .detail-username {
+        font-weight: 600;
+        font-size: 20px;
+    }
+}

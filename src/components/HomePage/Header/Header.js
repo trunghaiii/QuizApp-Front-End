@@ -11,11 +11,15 @@ import { useSelector, useDispatch } from 'react-redux'
 import { postLogOut } from '../../../services/apiService';
 import { toast } from "react-toastify"
 import { user_logout_success } from "../../../redux/slices/userSlice"
+import ProfileModal from './ProfileModal/ProfileModal';
+import { useState } from 'react';
 
 
 const Header = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    const [showProfile, setShowProfile] = useState(false)
 
     const account = useSelector((state) => state.user.account)
     const isAuthenticated = useSelector((state) => state.user.isAuthenticated)
@@ -32,6 +36,10 @@ const Header = () => {
             toast.error(response.EM)
         }
 
+    }
+
+    const handleProfile = () => {
+        setShowProfile(true)
     }
 
     return (
@@ -57,7 +65,10 @@ const Header = () => {
                                 :
                                 <>
                                     <DropdownButton variant="secondary" id="dropdown-basic-button" title="Settings">
-                                        <Dropdown.Item href="#/action-2">Profile</Dropdown.Item>
+                                        <Dropdown.Item
+                                            href="#/action-2"
+                                            onClick={() => handleProfile()}
+                                        >Profile</Dropdown.Item>
                                         <Dropdown.Item
                                             href="#/action-1"
                                             onClick={() => handleLogOut()}
@@ -71,6 +82,11 @@ const Header = () => {
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
+            <ProfileModal
+                show={showProfile}
+                setShow={setShowProfile}
+                account={account}
+            />
         </div >
 
     );
