@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { getDataQuiz, postSubmitQuiz } from '../../../../services/apiService'
 import _ from "lodash"
 import "./DetailQuiz.scss"
@@ -12,6 +12,7 @@ const DetailQuiz = (props) => {
     const param = useParams();
     const location = useLocation();
     const quizId = param.id;
+    const navigate = useNavigate()
 
     const [questionData, setQuestionData] = useState([])
     const [index, setIndex] = useState(0)
@@ -175,6 +176,13 @@ const DetailQuiz = (props) => {
                         className='btn btn-warning'
                         onClick={() => handleFinish()}
                     >Finish</button>
+                </div>
+                <div className='back-to-quiz-list mt-3'>
+                    <button
+                        type="button"
+                        className="btn btn-info btn-sm"
+                        onClick={() => navigate("/user")}
+                    >Back to Quiz List</button>
                 </div>
             </div>
             <div className='right-content'>
