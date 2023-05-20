@@ -18,7 +18,7 @@
             }
 
             .answer {
-                margin-left: 200px;
+                margin-left: 300px;
                 margin-top: 20px;
             }
 
@@ -82,5 +82,28 @@
                 }
             }
         }
+    }
+}
+
+@media screen and (max-width: 850px) {
+    .detail-quiz-container {
+        flex-direction: column-reverse;
+
+        .left-content {
+            width: 100%;
+
+            .q-body {
+                .answer {
+                    margin-left: 100px;
+                }
+            }
+
+        }
+
+        .right-content {
+            width: 100%;
+
+        }
+
     }
 }

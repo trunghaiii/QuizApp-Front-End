@@ -23,7 +23,7 @@ const SideBar = ({ collapsed, toggled, handleToggleSidebar }) => {
             image={sidebarBg}
             collapsed={collapsed}
             toggled={toggled}
-            breakPoint="md"
+            //breakPoint="md"
             onToggle={handleToggleSidebar}
         >
             <SidebarHeader>

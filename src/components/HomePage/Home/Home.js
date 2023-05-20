@@ -13,10 +13,8 @@ const Home = () => {
                 <source src={BackgroundVideo} type='video/mp4' />
             </video>
             <div className='home-content'>
-                <span className='home-content-title'>There's a better way to ask</span>
-                <span className='home-content-text'>You don't want to make a boring form.
-                    And your audience won't answer one.
-                    Create a typeform instead—and make everyone happy.</span>
+                <span className='home-content-title'>Quiz App</span>
+                <span className='home-content-text'>Test Your Knowledge With Quiz App</span>
                 {isAuthenticated === false ?
                     <button className='home-content-btn' onClick={() => navigate("/login")}>Get started-It is Free</button>
                     :

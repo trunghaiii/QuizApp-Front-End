@@ -40,13 +40,13 @@ const Login = (props) => {
                 Don't have an account yet?
                 <button onClick={() => navigate("/register")}>Sign Up</button>
             </div>
-            <div className="title col-3 mx-auto">
+            <div className="title col-6 mx-auto">
                 Quiz App
             </div>
-            <div className="welcome col-3 mx-auto">
+            <div className="welcome col-6 mx-auto">
                 Halloo! Who is this?
             </div>
-            <div className="login-form col-3 mx-auto">
+            <div className="login-form col-6 mx-auto">
                 <label for="email" className="form-label">Email</label>
                 <input
                     type="email"
@@ -65,10 +65,10 @@ const Login = (props) => {
                     onChange={(event) => setPassword(event.target.value)}
                 />
             </div>
-            <div className="forgot-password col-3 mx-auto">
+            <div className="forgot-password col-6 mx-auto">
                 <span>Forgot Password ?</span>
             </div>
-            <div className="login-btn col-3 mx-auto">
+            <div className="login-btn col-6 mx-auto">
                 <button
                     onClick={() => handleLogin()}
                     disabled={isLoading}
