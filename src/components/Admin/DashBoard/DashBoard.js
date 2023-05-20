@@ -1,5 +1,8 @@
 import "./DashBoard.scss"
-import { BarChart, CartesianGrid, XAxis, Tooltip, Legend, Bar, YAxis } from 'recharts';
+import {
+    BarChart, CartesianGrid, XAxis, Tooltip, Legend, Bar, YAxis,
+    ResponsiveContainer
+} from 'recharts';
 import { getDashBoardOverview } from "../../../services/apiService";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify"
@@ -61,17 +64,19 @@ const DashBoard = () => {
                 </div>
             </div>
             <div className="r-content">
-                <BarChart width={500} height={300} data={dashboardData}>
-                    {/* <CartesianGrid strokeDasharray="3 3" /> */}
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Bar dataKey="user" fill="#8884d8" />
-                    <Bar dataKey="admin" fill="#82ca9d" />
-                    <Bar dataKey="quiz" fill="red" />
-                    <Bar dataKey="question" fill="blue" />
-                </BarChart>
+                <ResponsiveContainer width="90%" height={300}>
+                    <BarChart data={dashboardData}>
+                        {/* <CartesianGrid strokeDasharray="3 3" /> */}
+                        <XAxis dataKey="name" />
+                        <YAxis />
+                        <Tooltip />
+                        <Legend />
+                        <Bar dataKey="user" fill="#8884d8" />
+                        <Bar dataKey="admin" fill="#82ca9d" />
+                        <Bar dataKey="quiz" fill="red" />
+                        <Bar dataKey="question" fill="blue" />
+                    </BarChart>
+                </ResponsiveContainer>
             </div>
         </div>
 

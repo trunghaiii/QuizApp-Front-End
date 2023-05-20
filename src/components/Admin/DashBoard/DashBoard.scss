@@ -68,3 +68,18 @@
 
     }
 }
+
+@media screen and (max-width: 900px) {
+    .dashboard-container {
+        flex-direction: column;
+        gap: 20px;
+
+        .l-content {
+            width: 100%;
+        }
+
+        .r-content {
+            width: 100%;
+        }
+    }
+}
