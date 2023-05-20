@@ -69,7 +69,7 @@ const ModalUpdateQuiz = (props) => {
 
             <Modal show={show} onHide={handleClose} size='lg'>
                 <Modal.Header closeButton>
-                    <Modal.Title>Modal heading</Modal.Title>
+                    <Modal.Title>Update Quiz</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>

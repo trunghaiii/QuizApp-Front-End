@@ -25,12 +25,13 @@
             }
 
             .q-img {
-                width: 100px;
+                width: 70px;
                 height: 70px;
 
                 img {
                     width: 100%;
                     height: 100%;
+                    border-radius: 50%;
                 }
             }
         }
@@ -66,6 +67,25 @@
             font-size: 25px;
             color: red;
             cursor: pointer;
+        }
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .manage-question-container {
+
+        .question {
+
+
+            .q-img-upload {
+
+
+                .q-img {
+                    display: none;
+                }
+            }
+
+
         }
     }
 }

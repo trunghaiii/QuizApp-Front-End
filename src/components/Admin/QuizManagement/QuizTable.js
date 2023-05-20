@@ -46,7 +46,7 @@ const QuizTable = (props) => {
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Name</th>
-                        <th scope="col">Description</th>
+                        {/* <th scope="col">Description</th> */}
                         <th scope="col">Difficulty</th>
                         <th scope="col">Actions</th>
                     </tr>
@@ -58,17 +58,19 @@ const QuizTable = (props) => {
                                 <tr>
                                     <th scope="row">{item.id}</th>
                                     <td>{item.name}</td>
-                                    <td>{item.description}</td>
+                                    {/* <td>{item.description}</td> */}
                                     <td>{item.difficulty}</td>
                                     <td>
-                                        <button
-                                            className="btn-edit btn btn-warning ml-3"
-                                            onClick={() => handleEditClick(item)}
-                                        >Edit</button>
-                                        <button
-                                            className="btn btn-danger"
-                                            onClick={() => handleDeleteClick(item)}
-                                        >Delete</button>
+                                        <div className="quiz-button-group">
+                                            <button
+                                                className="btn-edit btn btn-warning ml-3 btn-sm"
+                                                onClick={() => handleEditClick(item)}
+                                            >Edit</button>
+                                            <button
+                                                className="btn btn-danger btn-sm"
+                                                onClick={() => handleDeleteClick(item)}
+                                            >Delete</button>
+                                        </div>
                                     </td>
 
                                 </tr>
