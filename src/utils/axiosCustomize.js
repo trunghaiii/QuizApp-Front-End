@@ -2,14 +2,14 @@ import axios from "axios"
 import NProgress from 'nprogress'
 import store from "../redux/store"
 
-
 const instance = axios.create({
-    baseURL: 'http://localhost:8080/'
+    baseURL: 'http://103.90.227.140:8082/'
 });
 
 // Add a request interceptor
 instance.interceptors.request.use(function (config) {
     // Do something before request is sent
+    //console.log(process.env.REACT_APP_MY_ENVIRONMENT_VARIABLE);
     const access_token = store?.getState()?.user?.account?.access_token;
     config.headers["Authorization"] = "Bearer " + access_token;
 
