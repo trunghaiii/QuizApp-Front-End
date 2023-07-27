@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import _ from 'lodash'
 import { toast } from "react-toastify"
 import { getAllQuiz, postCreateQuestionForQuiz, postCreateAnswerForQuestion } from "../../../services/apiService"
-
+import Lightbox from "react-awesome-lightbox";
 
 const Questions = (props) => {
     const initQuestions = [
@@ -29,6 +29,8 @@ const Questions = (props) => {
 
     const [listQuiz, setListQuiz] = useState([])
     const [selectedOption, setSelectedOption] = useState(null);
+    const [isPreview, setIsPreview] = useState(false)
+
 
     useEffect(() => {
         fetchAllQuiz()
@@ -237,7 +239,18 @@ const Questions = (props) => {
                                             {
                                                 question.imageFile ?
                                                     <div className='q-img'>
-                                                        <img src={URL.createObjectURL(question.imageFile)} />
+                                                        {
+                                                            isPreview === true
+                                                                ?
+                                                                <Lightbox
+                                                                    onClose={() => setIsPreview(false)}
+                                                                    image={URL.createObjectURL(question.imageFile)}
+                                                                    title="Image Title" />
+                                                                :
+                                                                <span
+                                                                    onClick={() => setIsPreview(true)}
+                                                                >Preview Image</span>
+                                                        }
                                                     </div>
 
 
