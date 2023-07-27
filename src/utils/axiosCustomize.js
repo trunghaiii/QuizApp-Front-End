@@ -3,7 +3,7 @@ import NProgress from 'nprogress'
 import store from "../redux/store"
 
 const instance = axios.create({
-    baseURL: 'http://103.90.227.140:8082/'
+    baseURL: 'http://localhost:8080/'
 });
 
 // Add a request interceptor
