@@ -12,6 +12,7 @@ import {
     postCreateAnswerForQuestion, getQuizQA,
     postUpsertQA
 } from "../../../../services/apiService"
+import Lightbox from "react-awesome-lightbox";
 
 
 const QuizQA = (props) => {
@@ -34,6 +35,7 @@ const QuizQA = (props) => {
     const [listQuiz, setListQuiz] = useState([])
     const [questions, setQuestions] = useState(initQuestions)
     const [selectedOption, setSelectedOption] = useState(null);
+    const [isPreview, setIsPreview] = useState(false)
 
     useEffect(() => {
         fetchAllQuiz()
@@ -286,7 +288,19 @@ const QuizQA = (props) => {
                                             {
                                                 question.imageFile ?
                                                     <div className='q-img'>
-                                                        <img src={URL.createObjectURL(question.imageFile)} />
+                                                        {/* <img src={URL.createObjectURL(question.imageFile)} /> */}
+                                                        {
+                                                            isPreview === true
+                                                                ?
+                                                                <Lightbox
+                                                                    onClose={() => setIsPreview(false)}
+                                                                    image={URL.createObjectURL(question.imageFile)}
+                                                                    title="Image Title" />
+                                                                :
+                                                                <span
+                                                                    onClick={() => setIsPreview(true)}
+                                                                >Preview Image</span>
+                                                        }
                                                     </div>
 
 
