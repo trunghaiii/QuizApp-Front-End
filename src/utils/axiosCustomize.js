@@ -1,9 +1,9 @@
 import axios from "axios"
 import NProgress from 'nprogress'
 import store from "../redux/store"
-
+// 'http://localhost:8080/'
 const instance = axios.create({
-    baseURL: 'http://localhost:8080/'
+    baseURL: 'https://quizapp2001-d00aaca79fd7.herokuapp.com/'
 });
 
 // Add a request interceptor
