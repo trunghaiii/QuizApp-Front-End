@@ -51,7 +51,7 @@ const QuizQA = (props) => {
         const newData = data.DT.map(quiz => {
             return {
                 value: quiz.id,
-                label: `${quiz.id}-${quiz.description}`
+                label: `${quiz.id}-${quiz.name}`
             }
         })
         if (data && data.EC === 0) {

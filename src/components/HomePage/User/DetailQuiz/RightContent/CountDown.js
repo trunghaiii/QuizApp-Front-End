@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 const CountDown = (props) => {
 
-    const [duration, setDuration] = useState(15);
+    const [duration, setDuration] = useState(360);
 
     useEffect(() => {
         if (duration === 0) {
