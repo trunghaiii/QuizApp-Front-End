@@ -90,6 +90,10 @@ const Login = (props) => {
                     onClick={() => navigate("/")}
                 > &#60;&#60; Go to Home Page</span>
             </div>
+            <div className="side-info">
+                <p>Login as admin | email: <span>admin@gmail.com</span> pass: <span>12345</span></p>
+                <p>Login as user | email:  <span>user@gmail.com</span> pass:  <span>12345</span></p>
+            </div>
         </div >
     )
 }
