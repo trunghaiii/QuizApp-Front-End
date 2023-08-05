@@ -36,6 +36,7 @@ const QuizQA = (props) => {
     const [questions, setQuestions] = useState(initQuestions)
     const [selectedOption, setSelectedOption] = useState(null);
     const [isPreview, setIsPreview] = useState(false)
+    const [previewImageUrl, SetPreviewImageUrl] = useState("")
 
     useEffect(() => {
         fetchAllQuiz()
@@ -227,6 +228,11 @@ const QuizQA = (props) => {
 
 
     }
+
+    const handleClickPreviewImage = (previewImageFile) => {
+        setIsPreview(true);
+        SetPreviewImageUrl(previewImageFile)
+    }
     const toBase64 = file => new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -294,11 +300,11 @@ const QuizQA = (props) => {
                                                                 ?
                                                                 <Lightbox
                                                                     onClose={() => setIsPreview(false)}
-                                                                    image={URL.createObjectURL(question.imageFile)}
+                                                                    image={URL.createObjectURL(previewImageUrl)}
                                                                     title="Image Title" />
                                                                 :
                                                                 <span
-                                                                    onClick={() => setIsPreview(true)}
+                                                                    onClick={() => handleClickPreviewImage(question.imageFile)}
                                                                 >Preview Image</span>
                                                         }
                                                     </div>
